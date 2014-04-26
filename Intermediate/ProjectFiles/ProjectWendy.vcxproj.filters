@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<None Include="..\..\ProjectWendy.uproject" />
+		<Filter Include="Source">
+			<UniqueIdentifier>{A5628AF0-EAAA-4E2A-BC20-1973FABC2D92}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Source\ProjectWendy.Target.cs">
+			<Filter>Source</Filter>
+		</None >
+		<None Include="..\..\Source\ProjectWendyEditor.Target.cs">
+			<Filter>Source</Filter>
+		</None >
+		<Filter Include="Config">
+			<UniqueIdentifier>{0E7415C7-1ACE-40C2-9F9A-92C40AB1806C}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Config\DefaultEditor.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultEngine.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultGame.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultInput.ini">
+			<Filter>Config</Filter>
+		</None >
+		<Filter Include="Source\ProjectWendy">
+			<UniqueIdentifier>{B321DAF4-7B11-4714-804F-05CBDFD546DF}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Source\ProjectWendy\ProjectWendy.Build.cs">
+			<Filter>Source\ProjectWendy</Filter>
+		</None >
+		<ClCompile Include="..\..\Source\ProjectWendy\ProjectWendy.cpp">
+			<Filter>Source\ProjectWendy</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\ProjectWendy\ProjectWendy.h">
+			<Filter>Source\ProjectWendy</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\ProjectWendy\ProjectWendyCharacter.cpp">
+			<Filter>Source\ProjectWendy</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\ProjectWendy\ProjectWendyCharacter.h">
+			<Filter>Source\ProjectWendy</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\ProjectWendy\ProjectWendyGameMode.cpp">
+			<Filter>Source\ProjectWendy</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\ProjectWendy\ProjectWendyGameMode.h">
+			<Filter>Source\ProjectWendy</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\ProjectWendy\ProjectWendyPlayerController.cpp">
+			<Filter>Source\ProjectWendy</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\ProjectWendy\ProjectWendyPlayerController.h">
+			<Filter>Source\ProjectWendy</Filter>
+		</ClInclude >
+		<Filter Include="Source\ProjectWendy\Resources">
+			<UniqueIdentifier>{BF1FD7E1-B933-42EC-90C4-03A550E2C30C}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="Source\ProjectWendy\Resources\Windows">
+			<UniqueIdentifier>{EF2A9606-F93D-4E72-9D90-9ACC85E92A53}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Source\ProjectWendy\Resources\Windows\ProjectWendy.ico">
+			<Filter>Source\ProjectWendy\Resources\Windows</Filter>
+		</None >
+		<ResourceCompile Include="..\..\Source\ProjectWendy\Resources\Windows\ProjectWendy.rc">
+			<Filter>Source\ProjectWendy\Resources\Windows</Filter>
+		</ResourceCompile >
+	</ItemGroup>
+</Project>
