@@ -16,5 +16,12 @@ class AProjectWendyCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	TSubobjectPtr<class USpringArmComponent> CameraBoom;
 
+protected:
+	void MoveForward(float Value);
+	void MoveRight(float Value);
+
+protected:
+	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) OVERRIDE;
+
 };
 

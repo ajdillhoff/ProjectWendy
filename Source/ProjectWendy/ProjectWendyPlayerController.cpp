@@ -15,6 +15,8 @@ void AProjectWendyPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 
+	RotateToMouseCursor();
+
 	// keep updating the destination every tick while desired
 	if (bMoveToMouseCursor)
 	{
@@ -26,13 +28,25 @@ void AProjectWendyPlayerController::SetupInputComponent()
 {
 	// set up gameplay key bindings
 	Super::SetupInputComponent();
+}
 
-	InputComponent->BindAction("SetDestination", IE_Pressed, this, &AProjectWendyPlayerController::OnSetDestinationPressed);
-	InputComponent->BindAction("SetDestination", IE_Released, this, &AProjectWendyPlayerController::OnSetDestinationReleased);
+void AProjectWendyPlayerController::RotateToMouseCursor() {
+	// Local Variables
+	FVector mouseLocation, mouseDirection;
+	ACharacter *currentChar = this->GetCharacter();
+	FRotator charRotation   = currentChar->GetActorRotation();
+	FRotator targetRotation, newRotation;
 
-	// support touch devices 
-	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AProjectWendyPlayerController::MoveToTouchLocation);
-	InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &AProjectWendyPlayerController::MoveToTouchLocation);
+	// Get the current mouse rotation
+	this->DeprojectMousePositionToWorld(mouseLocation, mouseDirection);
+
+	targetRotation = mouseDirection.Rotation();
+
+	// Create new rotation
+	newRotation = FRotator(charRotation.Pitch, targetRotation.Yaw, charRotation.Roll);
+
+	currentChar->SetActorRotation(newRotation);
+
 }
 
 void AProjectWendyPlayerController::MoveToMouseCursor()

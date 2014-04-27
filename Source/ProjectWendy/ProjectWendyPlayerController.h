@@ -17,6 +17,9 @@ protected:
 	virtual void SetupInputComponent() OVERRIDE;
 	// End PlayerController interface
 
+	/* Rotate character to face the cursor */
+	void RotateToMouseCursor();
+
 	/** Navigate player to the current mouse cursor location. */
 	void MoveToMouseCursor();
 
