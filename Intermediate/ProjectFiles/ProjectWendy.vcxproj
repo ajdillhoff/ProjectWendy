@@ -51,6 +51,8 @@
 		<None Include="..\..\Config\DefaultEngine.ini" />
 		<None Include="..\..\Config\DefaultGame.ini" />
 		<None Include="..\..\Config\DefaultInput.ini" />
+		<ClCompile Include="..\..\Source\ProjectWendy\Projectile.cpp" />
+		<ClInclude Include="..\..\Source\ProjectWendy\Projectile.h" />
 		<None Include="..\..\Source\ProjectWendy\ProjectWendy.Build.cs" />
 		<ClCompile Include="..\..\Source\ProjectWendy\ProjectWendy.cpp" />
 		<ClInclude Include="..\..\Source\ProjectWendy\ProjectWendy.h" />
