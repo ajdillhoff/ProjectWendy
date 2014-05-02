@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7EAE1495-1FFF-4E40-87A0-D33D3A265568</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ProjectWendy</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3E346A66-17AF-4BDC-BB63-D76DDC7B9674</key>
+		<string>ssh://github.com/orbv/ProjectWendy.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ProjectWendy.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3E346A66-17AF-4BDC-BB63-D76DDC7B9674</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/orbv/ProjectWendy.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3E346A66-17AF-4BDC-BB63-D76DDC7B9674</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3E346A66-17AF-4BDC-BB63-D76DDC7B9674</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ProjectWendy</string>
+		</dict>
+	</array>
+</dict>
+</plist>
