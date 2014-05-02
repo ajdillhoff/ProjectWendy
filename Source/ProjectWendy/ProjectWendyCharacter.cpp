@@ -2,6 +2,7 @@
 
 #include "ProjectWendy.h"
 #include "ProjectWendyCharacter.h"
+#include "Projectile.h"
 
 AProjectWendyCharacter::AProjectWendyCharacter(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
@@ -22,6 +23,9 @@ AProjectWendyCharacter::AProjectWendyCharacter(const class FPostConstructInitial
 	CharacterMovement->JumpZVelocity = 600.0f;
 	CharacterMovement->AirControl = 0.2f;
 
+	// Default offset from the character location for projectiles to spawn
+	GunOffset = FVector(10.0f, 0.0f, 10.0f);
+
 	// Create a camera boom...
 	CameraBoom = PCIP.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("CameraBoom"));
 	CameraBoom->AttachTo(RootComponent);
@@ -40,8 +44,49 @@ AProjectWendyCharacter::AProjectWendyCharacter(const class FPostConstructInitial
 void AProjectWendyCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent) {
 	// Set up gameplay key bindings
 	check(InputComponent);
+
+	// Weapon Actions
+	InputComponent->BindAction("Fire", IE_Pressed, this, &AProjectWendyCharacter::OnFire);
+
+	// Movement
 	InputComponent->BindAxis("MoveForward", this, &AProjectWendyCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &AProjectWendyCharacter::MoveRight);
+}
+
+void AProjectWendyCharacter::OnFire()
+{
+	// try and fire a projectile
+	if (ProjectileClass != NULL)
+	{
+		const FRotator SpawnRotation = GetActorRotation();
+		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+		const FVector SpawnLocation = GetActorLocation() + SpawnRotation.RotateVector(GunOffset);
+
+		UWorld* const World = GetWorld();
+		if (World != NULL)
+		{
+			// spawn the projectile at the muzzle
+			World->SpawnActor<AProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+		}
+	}
+
+	//// try and play the sound if specified
+	//if (FireSound != NULL)
+	//{
+	//	UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
+	//}
+
+	//// try and play a firing animation if specified
+	//if (FireAnimation != NULL)
+	//{
+	//	// Get the animation object for the arms mesh
+	//	UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+	//	if (AnimInstance != NULL)
+	//	{
+	//		AnimInstance->Montage_Play(FireAnimation, 1.f);
+	//	}
+	//}
+
 }
 
 void AProjectWendyCharacter::MoveForward(float Value) {

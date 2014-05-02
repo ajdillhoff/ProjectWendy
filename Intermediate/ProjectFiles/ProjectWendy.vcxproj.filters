@@ -4,7 +4,7 @@
 	<ItemGroup>
 		<None Include="..\..\ProjectWendy.uproject" />
 		<Filter Include="Source">
-			<UniqueIdentifier>{A5628AF0-EAAA-4E2A-BC20-1973FABC2D92}</UniqueIdentifier>
+			<UniqueIdentifier>{812ACA40-7413-4DF0-8624-FF9EFF506E65}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\ProjectWendy.Target.cs">
 			<Filter>Source</Filter>
@@ -13,7 +13,7 @@
 			<Filter>Source</Filter>
 		</None >
 		<Filter Include="Config">
-			<UniqueIdentifier>{0E7415C7-1ACE-40C2-9F9A-92C40AB1806C}</UniqueIdentifier>
+			<UniqueIdentifier>{5DF79F80-ECCD-4AEE-B127-4D823400F220}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Config\DefaultEditor.ini">
 			<Filter>Config</Filter>
@@ -28,8 +28,14 @@
 			<Filter>Config</Filter>
 		</None >
 		<Filter Include="Source\ProjectWendy">
-			<UniqueIdentifier>{B321DAF4-7B11-4714-804F-05CBDFD546DF}</UniqueIdentifier>
+			<UniqueIdentifier>{395C06B4-25C6-4566-BEFF-2B03D8E1C37F}</UniqueIdentifier>
 		</Filter>
+		<ClCompile Include="..\..\Source\ProjectWendy\Projectile.cpp">
+			<Filter>Source\ProjectWendy</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\ProjectWendy\Projectile.h">
+			<Filter>Source\ProjectWendy</Filter>
+		</ClInclude >
 		<None Include="..\..\Source\ProjectWendy\ProjectWendy.Build.cs">
 			<Filter>Source\ProjectWendy</Filter>
 		</None >
@@ -58,10 +64,10 @@
 			<Filter>Source\ProjectWendy</Filter>
 		</ClInclude >
 		<Filter Include="Source\ProjectWendy\Resources">
-			<UniqueIdentifier>{BF1FD7E1-B933-42EC-90C4-03A550E2C30C}</UniqueIdentifier>
+			<UniqueIdentifier>{8E3F8107-0B97-4A6A-8708-4A5EB1959371}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="Source\ProjectWendy\Resources\Windows">
-			<UniqueIdentifier>{EF2A9606-F93D-4E72-9D90-9ACC85E92A53}</UniqueIdentifier>
+			<UniqueIdentifier>{DD7E5787-FD5C-48BB-AAB7-DA53F69561E9}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\ProjectWendy\Resources\Windows\ProjectWendy.ico">
 			<Filter>Source\ProjectWendy\Resources\Windows</Filter>
