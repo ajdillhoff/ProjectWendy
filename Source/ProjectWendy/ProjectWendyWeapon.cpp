@@ -84,27 +84,27 @@ void AProjectWendyWeapon::OnUnEquip()
 void AProjectWendyWeapon::AttachMeshToPawn()
 {
 	// TODO: Add attach point to mesh
-	//if (MyPawn)
-	//{
-	//	// Remove and hide mesh
-	//	DetachMeshFromPawn();
+	if (MyPawn)
+	{
+		// Remove and hide mesh
+		DetachMeshFromPawn();
 
-	//	// For locally controller players we attach both weapons and let the bOnlyOwnerSee, bOwnerNoSee flags deal with visibility.
-	//	FName AttachPoint = MyPawn->GetWeaponAttachPoint();
-	//	if (MyPawn->IsLocallyControlled() == true)
-	//	{
-	//		USkeletalMeshComponent* PawnMeshPlayer = MyPawn->GetSpecifcPawnMesh(true);
-	//		MeshPlayer->SetHiddenInGame(false);
-	//		MeshPlayer->AttachTo(PawnMeshPlayer, AttachPoint);
-	//	}
-	//	else
-	//	{
-	//		USkeletalMeshComponent* UseWeaponMesh = GetWeaponMesh();
-	//		USkeletalMeshComponent* UsePawnMesh = MyPawn->GetPawnMesh();
-	//		UseWeaponMesh->AttachTo(UsePawnMesh, AttachPoint);
-	//		UseWeaponMesh->SetHiddenInGame(false);
-	//	}
-	//}
+		// For locally controller players we attach both weapons and let the bOnlyOwnerSee, bOwnerNoSee flags deal with visibility.
+		FName AttachPoint = MyPawn->GetWeaponAttachPoint();
+		if (MyPawn->IsLocallyControlled() == true)
+		{
+			USkeletalMeshComponent* PawnMeshPlayer = MyPawn->GetPawnMesh();
+			MeshPlayer->SetHiddenInGame(false);
+			MeshPlayer->AttachTo(PawnMeshPlayer, AttachPoint);
+		}
+		else
+		{
+			USkeletalMeshComponent* UseWeaponMesh = GetWeaponMesh();
+			USkeletalMeshComponent* UsePawnMesh = MyPawn->GetPawnMesh();
+			UseWeaponMesh->AttachTo(UsePawnMesh, AttachPoint);
+			UseWeaponMesh->SetHiddenInGame(false);
+		}
+	}
 }
 
 void AProjectWendyWeapon::DetachMeshFromPawn()

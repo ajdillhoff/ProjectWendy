@@ -7,6 +7,13 @@
 AProjectWendyCharacter::AProjectWendyCharacter(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
+	CharacterMesh = PCIP.CreateDefaultSubobject<USkeletalMeshComponent>(this, TEXT("PlayerMesh"));
+	CharacterMesh->SetCollisionObjectType(ECC_Pawn);
+	CharacterMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	CharacterMesh->SetCollisionResponseToChannel(COLLISION_WEAPON, ECR_Block);
+	CharacterMesh->SetCollisionResponseToChannel(COLLISION_PROJECTILE, ECR_Block);
+	CharacterMesh->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+
 	// Set size for player capsule
 	CapsuleComponent->InitCapsuleSize(42.f, 96.0f);
 
@@ -39,6 +46,13 @@ AProjectWendyCharacter::AProjectWendyCharacter(const class FPostConstructInitial
 	TopDownCameraComponent->AttachTo(CameraBoom, USpringArmComponent::SocketName);
 	TopDownCameraComponent->bUseControllerViewRotation = false; // Camera does not rotate relative to arm
 
+}
+
+void AProjectWendyCharacter::PostInitializeComponents() {
+	Super::PostInitializeComponents();
+
+	// Spawn the weapon
+	
 }
 
 void AProjectWendyCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent) {
@@ -106,4 +120,12 @@ void AProjectWendyCharacter::MoveRight(float Value) {
 		const FVector direction = FRotationMatrix(targetRotation).GetUnitAxis(EAxis::Y);
 		AddMovementInput(direction, Value);
 	}
+}
+
+FName AProjectWendyCharacter::GetWeaponAttachPoint() const {
+	return WeaponAttachPoint;
+}
+
+USkeletalMeshComponent* AProjectWendyCharacter::GetPawnMesh() const {
+	return CharacterMesh;
 }

@@ -8,6 +8,9 @@ class AProjectWendyCharacter : public ACharacter
 {
 	GENERATED_UCLASS_BODY()
 
+	/** spawn inventory, setup initial variables */
+	virtual void PostInitializeComponents() OVERRIDE;
+
 	/** Top down camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	TSubobjectPtr<UCameraComponent> TopDownCameraComponent;
@@ -32,13 +35,30 @@ class AProjectWendyCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	UAnimMontage* FireAnimation;
 
-protected:
-	void OnFire();
-	void MoveForward(float Value);
-	void MoveRight(float Value);
+	/** get weapon attach point */
+	FName GetWeaponAttachPoint() const;
+
+	/** Get the current pawn's mesh */
+	USkeletalMeshComponent* GetPawnMesh() const;
 
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) OVERRIDE;
 
+	void OnFire();
+
+	void MoveForward(float Value);
+
+	void MoveRight(float Value);
+
+	/** socket or bone name for attaching weapon mesh */
+	UPROPERTY(EditDefaultsOnly, Category = Inventory)
+	FName WeaponAttachPoint;
+
+	UPROPERTY(EditDefaultsOnly, Category = Inventory)
+	AProjectWendyWeapon* Weapon;
+
+	/** pawn mesh: 1st person view */
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+	TSubobjectPtr<USkeletalMeshComponent> CharacterMesh;
 };
 
