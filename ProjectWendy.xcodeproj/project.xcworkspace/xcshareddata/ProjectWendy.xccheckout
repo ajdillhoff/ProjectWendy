@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>7EAE1495-1FFF-4E40-87A0-D33D3A265568</string>
+	<string>F6D15E9B-8558-4E9A-BA18-C793C30D7356</string>
 	<key>IDESourceControlProjectName</key>
 	<string>ProjectWendy</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>3E346A66-17AF-4BDC-BB63-D76DDC7B9674</key>
+		<key>912950D5-3881-4740-83F0-FE1FD229D696</key>
 		<string>ssh://github.com/orbv/ProjectWendy.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>ProjectWendy.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>3E346A66-17AF-4BDC-BB63-D76DDC7B9674</key>
+		<key>912950D5-3881-4740-83F0-FE1FD229D696</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>3E346A66-17AF-4BDC-BB63-D76DDC7B9674</string>
+	<string>912950D5-3881-4740-83F0-FE1FD229D696</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>3E346A66-17AF-4BDC-BB63-D76DDC7B9674</string>
+			<string>912950D5-3881-4740-83F0-FE1FD229D696</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ProjectWendy</string>
 		</dict>
