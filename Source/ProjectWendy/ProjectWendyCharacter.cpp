@@ -3,11 +3,12 @@
 #include "ProjectWendy.h"
 #include "ProjectWendyCharacter.h"
 #include "Projectile.h"
+#include "ProjectWendyWeapon.h"
 
 AProjectWendyCharacter::AProjectWendyCharacter(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	CharacterMesh = PCIP.CreateDefaultSubobject<USkeletalMeshComponent>(this, TEXT("PlayerMesh"));
+	CharacterMesh = PCIP.CreateDefaultSubobject<USkeletalMeshComponent>(this, TEXT("HeroTPP"));
 	CharacterMesh->SetCollisionObjectType(ECC_Pawn);
 	CharacterMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	CharacterMesh->SetCollisionResponseToChannel(COLLISION_WEAPON, ECR_Block);
@@ -30,9 +31,6 @@ AProjectWendyCharacter::AProjectWendyCharacter(const class FPostConstructInitial
 	CharacterMovement->JumpZVelocity = 600.0f;
 	CharacterMovement->AirControl = 0.2f;
 
-	// Default offset from the character location for projectiles to spawn
-	GunOffset = FVector(10.0f, 0.0f, 10.0f);
-
 	// Create a camera boom...
 	CameraBoom = PCIP.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("CameraBoom"));
 	CameraBoom->AttachTo(RootComponent);
@@ -52,7 +50,7 @@ void AProjectWendyCharacter::PostInitializeComponents() {
 	Super::PostInitializeComponents();
 
 	// Spawn the weapon
-	
+	SpawnDefaultInventory();
 }
 
 void AProjectWendyCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent) {
@@ -65,42 +63,6 @@ void AProjectWendyCharacter::SetupPlayerInputComponent(class UInputComponent* In
 	// Movement
 	InputComponent->BindAxis("MoveForward", this, &AProjectWendyCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &AProjectWendyCharacter::MoveRight);
-}
-
-void AProjectWendyCharacter::OnFire()
-{
-	// try and fire a projectile
-	if (ProjectileClass != NULL)
-	{
-		const FRotator SpawnRotation = GetActorRotation();
-		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-		const FVector SpawnLocation = GetActorLocation() + SpawnRotation.RotateVector(GunOffset);
-
-		UWorld* const World = GetWorld();
-		if (World != NULL)
-		{
-			// spawn the projectile at the muzzle
-			World->SpawnActor<AProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
-		}
-	}
-
-	//// try and play the sound if specified
-	//if (FireSound != NULL)
-	//{
-	//	UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
-	//}
-
-	//// try and play a firing animation if specified
-	//if (FireAnimation != NULL)
-	//{
-	//	// Get the animation object for the arms mesh
-	//	UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-	//	if (AnimInstance != NULL)
-	//	{
-	//		AnimInstance->Montage_Play(FireAnimation, 1.f);
-	//	}
-	//}
-
 }
 
 void AProjectWendyCharacter::MoveForward(float Value) {
@@ -128,4 +90,79 @@ FName AProjectWendyCharacter::GetWeaponAttachPoint() const {
 
 USkeletalMeshComponent* AProjectWendyCharacter::GetPawnMesh() const {
 	return CharacterMesh;
+}
+
+/*********************************
+*          Weapon Usage          *
+*********************************/
+
+void AProjectWendyCharacter::OnFire()
+{
+	StartWeaponFire();
+	//// try and play the sound if specified
+	//if (FireSound != NULL)
+	//{
+	//	UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
+	//}
+
+	//// try and play a firing animation if specified
+	//if (FireAnimation != NULL)
+	//{
+	//	// Get the animation object for the arms mesh
+	//	UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+	//	if (AnimInstance != NULL)
+	//	{
+	//		AnimInstance->Montage_Play(FireAnimation, 1.f);
+	//	}
+	//}
+
+}
+
+void AProjectWendyCharacter::StartWeaponFire() {
+	if (CurrentWeapon) {
+		CurrentWeapon->StartFire();
+	}
+}
+
+/*****************************
+*          Inventory         *
+*****************************/
+
+void AProjectWendyCharacter::SpawnDefaultInventory() {
+	if (DefaultWeapons[0]) {
+		FActorSpawnParameters SpawnInfo;
+		SpawnInfo.bNoCollisionFail = true;
+		AProjectWendyWeapon *NewWeapon = GetWorld()->SpawnActor<AProjectWendyWeapon>(DefaultWeapons[0], SpawnInfo);
+		// Add the weapon to the player's inventory
+		AddWeapon(NewWeapon);
+	}
+
+	// equip first weapon in inventory
+	if (Inventory.Num() > 0)
+	{
+		EquipWeapon(Inventory[0]);
+	}
+}
+
+void AProjectWendyCharacter::AddWeapon(AProjectWendyWeapon* Weapon) {
+	if (Weapon) {
+		// Set the current character as the weapon owner
+		Weapon->OnEnterInventory(this);
+		Inventory.AddUnique(Weapon);
+	}
+}
+
+void AProjectWendyCharacter::EquipWeapon(AProjectWendyWeapon* Weapon) {
+	if (Weapon) {
+		SetCurrentWeapon(Weapon);
+	}
+}
+
+void AProjectWendyCharacter::SetCurrentWeapon(class AProjectWendyWeapon* NewWeapon) {
+	CurrentWeapon = NewWeapon;
+
+	if (NewWeapon) {
+		NewWeapon->SetOwningPawn(this);
+		NewWeapon->OnEquip();
+	}
 }

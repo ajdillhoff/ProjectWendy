@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "Projectile.h"
 #include "ProjectWendyCharacter.h"
 #include "ProjectWendyPlayerController.h"
 #include "ProjectWendyWeapon.generated.h"
@@ -48,6 +49,14 @@ class AProjectWendyWeapon : public AActor
 {
 	GENERATED_UCLASS_BODY()
 
+	/** Gun muzzle's offset from the characters location */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	FVector GunOffset;
+
+	/** Projectile class to spawn */
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AProjectile> ProjectileClass;
+
 	/** perform initial setup */
 	virtual void PostInitializeComponents() OVERRIDE;
 
@@ -65,6 +74,9 @@ class AProjectWendyWeapon : public AActor
 	/** weapon is holstered by owner pawn */
 	virtual void OnUnEquip();
 
+	/** weapon was added to pawn's inventory */
+	virtual void OnEnterInventory(AProjectWendyCharacter* NewOwner);
+
 	/** check if it's currently equipped */
 	bool IsEquipped() const;
 
@@ -80,6 +92,9 @@ class AProjectWendyWeapon : public AActor
 
 	/** [local + server] stop weapon fire */
 	virtual void StopFire();
+
+	/* handles firing of the weapon */
+	virtual void FireWeapon();
 
 
 	//////////////////////////////////////////////////////////////////////////
@@ -149,7 +164,7 @@ protected:
 	// Weapon usage
 
 	/** [local] weapon specific fire implementation */
-	virtual void FireWeapon() PURE_VIRTUAL(AProjectWendyWeapon::FireWeapon,);
+	//virtual void FireWeapon() PURE_VIRTUAL(AProjectWendyWeapon::FireWeapon,);
 
 	/** [local + server] handle weapon fire */
 	void HandleFiring();

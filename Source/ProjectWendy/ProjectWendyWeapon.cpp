@@ -16,6 +16,9 @@ AProjectWendyWeapon::AProjectWendyWeapon(const class FPostConstructInitializePro
 	MeshPlayer->SetCollisionResponseToAllChannels(ECR_Ignore);
 	RootComponent = MeshPlayer;
 
+	// Default offset from the character location for projectiles to spawn
+	GunOffset = FVector(10.0f, 0.0f, 10.0f);
+
 	bIsEquipped = false;
 	bWantsToFire = false;
 	CurrentState = EWeaponState::Idle;
@@ -81,6 +84,12 @@ void AProjectWendyWeapon::OnUnEquip()
 	DetermineWeaponState();
 }
 
+void AProjectWendyWeapon::OnEnterInventory(AProjectWendyCharacter *NewOwner) {
+	SetOwningPawn(NewOwner);
+
+	// Additional logic
+}
+
 void AProjectWendyWeapon::AttachMeshToPawn()
 {
 	// TODO: Add attach point to mesh
@@ -91,19 +100,19 @@ void AProjectWendyWeapon::AttachMeshToPawn()
 
 		// For locally controller players we attach both weapons and let the bOnlyOwnerSee, bOwnerNoSee flags deal with visibility.
 		FName AttachPoint = MyPawn->GetWeaponAttachPoint();
-		if (MyPawn->IsLocallyControlled() == true)
+		//if (MyPawn->IsLocallyControlled() == true)
 		{
-			USkeletalMeshComponent* PawnMeshPlayer = MyPawn->GetPawnMesh();
-			MeshPlayer->SetHiddenInGame(false);
-			MeshPlayer->AttachTo(PawnMeshPlayer, AttachPoint);
+			//USkeletalMeshComponent* PawnMeshPlayer = MyPawn->GetPawnMesh();
+			//MeshPlayer->SetHiddenInGame(false);
+			//MeshPlayer->AttachTo(PawnMeshPlayer, AttachPoint);
 		}
-		else
-		{
+		//else
+		//{
 			USkeletalMeshComponent* UseWeaponMesh = GetWeaponMesh();
 			USkeletalMeshComponent* UsePawnMesh = MyPawn->GetPawnMesh();
 			UseWeaponMesh->AttachTo(UsePawnMesh, AttachPoint);
 			UseWeaponMesh->SetHiddenInGame(false);
-		}
+		//}
 	}
 }
 
@@ -124,12 +133,14 @@ void AProjectWendyWeapon::StartFire()
 	{
 		// Fire the projectile
 		// ServerStartFire();
+		//FireWeapon();
 	}
 
 	if (!bWantsToFire)
 	{
 		bWantsToFire = true;
-		DetermineWeaponState();
+		FireWeapon();
+		//DetermineWeaponState();
 	}
 }
 
@@ -145,6 +156,26 @@ void AProjectWendyWeapon::StopFire()
 	{
 		bWantsToFire = false;
 		DetermineWeaponState();
+	}
+}
+
+void AProjectWendyWeapon::FireWeapon() {
+
+	UE_LOG(LogClass, Log, TEXT("AProjectWendyWeapon::FireWeapon()"));
+
+	// try and fire a projectile
+	if (ProjectileClass != NULL)
+	{
+		const FRotator SpawnRotation = GetActorRotation();
+		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+		const FVector SpawnLocation = GetActorLocation() + SpawnRotation.RotateVector(GunOffset);
+
+		UWorld* const World = GetWorld();
+		if (World != NULL)
+		{
+			// spawn the projectile at the muzzle
+			World->SpawnActor<AProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+		}
 	}
 }
 

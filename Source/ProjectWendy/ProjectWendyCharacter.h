@@ -19,14 +19,6 @@ class AProjectWendyCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	TSubobjectPtr<class USpringArmComponent> CameraBoom;
 
-	/** Gun muzzle's offset from the characters location */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	FVector GunOffset;
-
-	/** Projectile class to spawn */
-	UPROPERTY(EditDefaultsOnly, Category = Projectile)
-	TSubclassOf<class AProjectile> ProjectileClass;
-
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	USoundBase* FireSound;
@@ -41,10 +33,30 @@ class AProjectWendyCharacter : public ACharacter
 	/** Get the current pawn's mesh */
 	USkeletalMeshComponent* GetPawnMesh() const;
 
+	/*********************************
+	*           Inventory            *
+	*********************************/
+
+	/* Add a weapon to player inventory */
+	void AddWeapon(class AProjectWendyWeapon* Weapon);
+
+	/* Equip a weapon from inventory */
+	void EquipWeapon(class AProjectWendyWeapon* Weapon);
+
+	/* Set the current weapon */
+	void SetCurrentWeapon(class AProjectWendyWeapon* NewWeapon);
+
+	/*********************************
+	*          Weapon Usage          *
+	*********************************/
+
+	/* starts weapon fire */
+	void StartWeaponFire();
+
+	/* stops weapon fire */
+
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) OVERRIDE;
-
-	void OnFire();
 
 	void MoveForward(float Value);
 
@@ -55,10 +67,30 @@ protected:
 	FName WeaponAttachPoint;
 
 	UPROPERTY(EditDefaultsOnly, Category = Inventory)
-	AProjectWendyWeapon* Weapon;
+	TArray<TSubclassOf<class AProjectWendyWeapon> > DefaultWeapons;
+
+	UPROPERTY(Transient)
+	TArray<class AProjectWendyWeapon*> Inventory;
+
+	UPROPERTY(Transient)
+	class AProjectWendyWeapon* CurrentWeapon;
 
 	/** pawn mesh: 1st person view */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 	TSubobjectPtr<USkeletalMeshComponent> CharacterMesh;
+
+	/******************
+	*    Inventory    *
+	******************/
+
+	/* Set up the default inventory (weapons) */
+	void SpawnDefaultInventory();
+
+	/***********************
+	*     Weapon Usage     *
+	***********************/
+
+	/* starts weapon fire */
+	void OnFire();
 };
 
